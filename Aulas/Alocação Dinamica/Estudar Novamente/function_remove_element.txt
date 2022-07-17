@@ -1,0 +1,14 @@
+void remove_element (Lista *l, int v) {    
+    if (!esta_vazia){
+        NoLista *p, *ant, *n;
+        for ( p = l->cab->prox ; p->info != v ;p = p->prox){
+            ant = p;
+        }
+            if (ant->info == v){
+                l->cab->prox = p->prox;
+            } else {
+                ant->prox = p->prox;
+            }
+        free(p);
+    }
+}

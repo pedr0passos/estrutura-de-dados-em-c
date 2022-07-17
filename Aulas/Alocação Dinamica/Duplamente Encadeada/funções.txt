@@ -1,0 +1,54 @@
+FUNÇÕES D. ENCADEADA
+
+void inserirElemento(NoLista** l, int v) {
+    NoLista * n = (NoLista*) malloc(sizeof(NoLista));
+	if (n != NULL)	{
+		n -> info = v;
+		n-> ant = NULL;
+		n -> prox = * l;
+		*l = n;
+	}
+}
+
+// função que imprime inversamente ( precisa ter a função que retorna o ponteiro para o ultimo elemento da lista )
+
+void imprime_inversamente ( NoLista **l ) {
+    if (!lista_vazia(l)) {
+        for (NoLista *p = ultimo(l); p!=NULL; p = p->ultimo) {
+            printf("%d", p->info);
+        }
+    } else {
+        printf("Lista está vazia!");
+    }
+}
+
+// função para remover_elemento ( NoLista **l; int v ) {
+    algo relacioado a:
+        p->ant->prox = p->prox      //Não é executada para o primeiro elemento
+        p->prox->ant = p->ant       // Não é executado para o ultimo elemento
+
+    if (!lista_vazia(l)) {
+        NoLista *p = busca(l, v);
+        if ( *l == p ) {            // testa se é o primeiro
+            *l = p->prox;           
+        } else {                   
+            p->ant->prox = p->prox; // faz anterior apontar para o proximo
+        }
+        if ( p->prox != NULL ) {    // testa se é o ultimo  
+            p->prox->ant = p->ant;  // faz o proximo apontar para o anterior 
+        }
+        free(p);
+    }
+
+
+}
+
+função para inserir_ordenado ( NoLista **l, int v ) {
+    malloca bla bla bla
+    ponteiro auxiliar q percorre a lista
+    for ( p != NULL; p == )
+    n->ant = p->ant;
+    n->prox = p;
+    p->ant->prox = n;
+    p->ant = n;
+}
