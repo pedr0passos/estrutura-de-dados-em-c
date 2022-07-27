@@ -73,13 +73,14 @@ void liberarFila(Fila *f){
 
 float maior (Fila *f) {
     int x= f->inicio;
-    float aux;
+    float aux = 0;
     for (int i = 0; i < f->n; i++) {
-        if ( f->info[x] < f->info[x+1] ) {
-            aux = f->info[x+1];
+        if ( f->info[x] > aux ) {
+            aux = f->info[x];
             x = (x+1) % N;
-        } 
-
+        } else {
+            x = (x+1) % N;
+        }
     }
     return aux;
 }
@@ -89,11 +90,11 @@ int main(){
     Fila *f = criarFila();
 
     // inserindo na fila
-    inserir(f, 10);
-    inserir(f, 20);
-    inserir(f, 300);
-    inserir(f, 4000);
     inserir(f, 50);
+    inserir(f, 2);
+    inserir(f, 70000000);
+    inserir(f, 100);
+    inserir(f, 22);
     l();
     printf("Fila:\n");
     imprimeFila(f);
