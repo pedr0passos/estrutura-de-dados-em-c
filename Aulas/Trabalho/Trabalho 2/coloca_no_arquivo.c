@@ -5,12 +5,17 @@
 void l(){
     printf("\n-----------------------------------------------------\n");
 }
+void lb(){
+    setbuf(stdin, NULL);
+}
+
 
 int main () {
 setlocale(LC_ALL,"portuguese");
 
-    FILE *arq = fopen("exemplo.txt", "a");              // abre o arquivo, com 'a' pois é igual o 'w', ele lê porem mantém os dados dentro, ou seja, não exclui a cada nova leitura
-    char nome[100], caractere;
+    FILE *arq = fopen("exemplo.txt", "w");              // abre o arquivo, com 'a' pois é igual o 'w', ele lê porem mantém os dados dentro, ou seja, não exclui a cada nova leitura
+    char nome[100], caractere, curso[100];
+    int id, amigos;
 
     if ( arq != NULL ) {
 
@@ -20,7 +25,15 @@ setlocale(LC_ALL,"portuguese");
 
         printf("Digite para colocar no arquivo: ");
         scanf("%[^\n]", nome);
-        fprintf(arq, "%s\n", nome);                       // coloca dentro do arquivo
+        lb();
+        printf("ID: ");
+        scanf("%d", &id);
+        lb();
+        printf("Curso: ");
+        scanf("%[^\n]", curso);
+        printf ("Lista de Amigos: ");
+        scanf("%d", &amigos);
+        fprintf(arq, "%s\t%d\t%s\n\t%d\n", nome, id, curso, amigos);                       // coloca dentro do arquivo
 
 
         int close = fclose(arq);                        // fecha o arquivo
