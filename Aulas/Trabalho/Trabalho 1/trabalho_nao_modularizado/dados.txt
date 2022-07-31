@@ -1,3 +1,4 @@
-Pedro	4	Ciencia da Computacao
-Catterina	1	Ciencia da Computaria
-Caio Cabeça de Pica	5	Ciencia da Computacao
+atterina	2	Historia
+Juliana	1	Ciencia da Computacao
+Pedro	3	Nao sei
+Pedro	3	Nao sei
