@@ -255,10 +255,45 @@ char *retornaCurso ( Aluno *a ) {
 int main () {
 setlocale(LC_ALL,"portuguese");
 
-Lista *lista ;
-int opcao, w = 0; 
-
+// variaveis
+Lista *lista;
+int opcao, w = 0, close; 
+char aux;
+// cria a lista duplamente encadeada
 cria_lista(&lista);
+
+// CAMPO DE ARQUIVO:
+// abre o arquivo
+FILE *arq = fopen("dados.txt", "r");    
+
+    // verifica se o arquivo foi aberto
+    if ( arq != NULL ) {
+
+        pl();
+        printf("Arquivo Aberto");
+        pl();
+
+    }
+
+    Aluno *n = malloc(sizeof(Aluno));
+
+
+    do {
+        while ( fscanf(arq, "%[^\t]", &n->nome) == 1 ) {
+            printf("%s\n", n->nome);
+        }
+        while ( fscanf(arq, "%d", &n->id) == 1 ) {
+            printf("%d\n", n->id);
+        }
+        while ( fscanf(arq, "%[^\t]", &n->curso) == 1 ) {
+            printf("%s\n", n->curso);
+        }
+    } while (fscanf(arq, "%c", &aux) == 1);
+
+    
+close = fclose(arq);
+
+//-------------------------------------------------
 
 while ( w == 0 ) {
 
@@ -532,11 +567,34 @@ while ( w == 0 ) {
             break;
 
         case 9:;    // ENCERRANDO O PROGRAMA 
+            
+            arq = fopen("dados.txt", "w");
+            for ( Lista *p = lista; p != NULL; p = p->proximo ) {
+                fprintf(arq,"%s\t%d\t%s\n", p->aluno.nome, p->aluno.id, p->aluno.curso);
+                    for ( Amigos *a = p->aluno.amigos; a != NULL; a = a->proximo) {
+                        fprintf(arq, "\t");
+                        fprintf(arq, "%d ", a->id);
+                        fprintf(arq, "\n");
+                    }
+            }
 
-            linha();
-            printf("Programa Encerrado.");
-            linha();
-            w = 1;
+            close = fclose(arq);
+
+            if ( close == 0 ) {
+
+                linha();
+                printf("Programa Encerrado.");
+                linha();
+                w = 1;
+                
+            } else {
+
+                linha();
+                printf("Erro de Arquivo.");
+                linha();
+
+            }
+
             break;
 
         default:;

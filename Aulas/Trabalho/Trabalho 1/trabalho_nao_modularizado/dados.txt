@@ -1,0 +1,3 @@
+Pedro	4	Ciencia da Computacao
+Catterina	1	Ciencia da Computaria
+Caio Cabeça de Pica	5	Ciencia da Computacao
