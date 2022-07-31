@@ -73,6 +73,7 @@ void liberar(pilha *p) {
     p = criar();
 }
 
+//imprime a pilha
 void imprime(pilha*p) {
     if (!vazia(p)) {
         for ( nopilha *q = p->primeiro; q!=NULL; q = q->proximo) {
@@ -85,34 +86,68 @@ void imprime(pilha*p) {
     }
 }
 
+//imprime o topo da pilha
 float ver_topo (pilha *p) {
     return (p->primeiro->info);
 }
 
+//concatena usando apenas ponteiros 
+void concatena_v3(pilha*p1, pilha *p2) {
+    nopilha *q;
+    for (q = p2->primeiro; q->proximo != NULL; q = q->proximo);
+    q->proximo = p1->primeiro;
+    p1->primeiro = p2->primeiro;
+    free(p2);
+}
+
 int main () {
+setlocale(LC_ALL,"portuguese");
 
     // criando a pilha
-    pilha *p = criar();
+    pilha *p1 = criar();
+    pilha *p2 = criar();
     //inserindo na pilha
-    push(p, 40);
-    push(p, 170);
-    push(p, 273);
-    push(p, 12); 
+    push(p1, 3);
+    push(p1, 2);
+    push(p1, 1); 
+
+    push(p2, 6);
+    push(p2, 5);
+    push(p2, 4);
+
     l();
-    printf("Pilha:\n");
-    imprime(p);
+    printf("Pilha 1:\n");
+    imprime(p1);
     l();
-    printf("Topo da Pilha Atual:\n");
-    printf("%.1f", ver_topo(p));
+    printf("Pilha 2:\n");
+    imprime(p2);
     l();
-    pop(p);
-    printf("Removendo:\n");
-    remove(p);
-    imprime(p);
+    printf("Topo Atual da Pilha 1:\n");
+    printf("%.1f", ver_topo(p1));
     l();
-    printf("Topo da Pilha Atual:\n");
-    printf("%.1f", ver_topo(p));
+    printf("Topo Atual da Pilha 2:\n");
+    printf("%.1f", ver_topo(p2));
     l();
-    
+    // pop(p1);
+    // printf("Removendo Pilha 1:\n");
+    // remove(p1);
+    // imprime(p1);
+    // l();
+    // pop(p2);
+    // printf("Removendo Pilha 2:\n");
+    // remove(p2);
+    // imprime(p2);
+    // l();
+    printf("Topo Atual da Pilha 1:\n");
+    printf("%.1f", ver_topo(p1));
+    l();
+    printf("Topo Atual da Pilha 2:\n");
+    printf("%.1f", ver_topo(p2));
+    l();
+    printf("Concatenando com a Versão 3 da Função:\n");
+    concatena_v3(p1,p2);
+    imprime(p1);
+
+
     return 0;
 }
