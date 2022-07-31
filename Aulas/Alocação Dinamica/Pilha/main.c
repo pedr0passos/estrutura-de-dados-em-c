@@ -2,105 +2,117 @@
 #include <stdlib.h>
 #include <locale.h>
 
-typedef struct no{
+// PILHA COM LISTA ENCADEADA (ALOCAÇÃO DINAMICA)
+
+//estrutura que representa a pilha e dos nós da pilha
+typedef struct no {
     float info;
-    struct no* prox;
-}NoPilha;
+    struct no *proximo;
+}nopilha;
 
-typedef struct pilha {
-    NoPilha* prim;
-}Pilha;
+typedef struct p {
+    nopilha *primeiro;
+}pilha;
 
-Pilha* criaPilha(){
-    Pilha *p = malloc(sizeof(Pilha));
-    p->prim = NULL;
+//FUNÇÕES:
 
+void l() {
+    printf("\n-------------------------------------\n");
+}
+
+//cria uma pilha vazia
+pilha *criar() {
+    pilha *p = malloc(sizeof(pilha));
+    p->primeiro = NULL;
     return p;
 }
 
-Pilha* estaVazia(Pilha *p){
-    return(p->prim == NULL);
+//verifica se a pilha está vazia
+int vazia(pilha *p) {
+    return (p->primeiro == NULL);
 }
 
-void push(Pilha *p, float num){
-    NoPilha* n = malloc(sizeof(NoPilha));
-    if ( n != NULL ) {
-        n->info = num;
-        n->prox = p->prim;
-        p->prim = n;
+//insere um elemento no topo da pilha ( p->primeiro )
+void push(pilha *p, float v) {
+    nopilha *novo = malloc(sizeof(nopilha));
+    if ( novo != NULL ) {
+        novo->info = v;
+        novo->proximo = p->primeiro;
+        p->primeiro = novo;
     } else {
-        printf("Não foi possivel alocar espaço.\n");
+        l();
+        printf("Não foi possível alocar espaço.");
+        l();
     }
 }
 
-void imprimePilha (Pilha *p) {
-    NoPilha* aux;
-    if ( !estaVazia(p)) {
-        for(aux = p->prim; aux != NULL; aux = aux->prox) {
-            printf("%.1f\n", aux->info);
-        }
-    } else {
-        printf("Está vazia!");
-    }
-
-}
-
-float pop(Pilha *p) {
-    if (!estaVazia(p)) {
-        NoPilha*temp = p->prim;
+//remove no topo da pilha (p->primeiro);
+float pop(pilha *p) {
+    if (!vazia(p)) {
+        nopilha *temp = p->primeiro;
         float v = temp->info;
-        p->prim = temp->prox;
+        p->primeiro = temp->proximo;
         free(temp);
         return v;
     } else {
-        printf("Pilha Vazia!\n");
+        l();
+        printf("Pilha Vazia!");
+        l();
         exit(1);
     }
 }
 
-void libera(Pilha *p){
-    if(!estaVazia(p)){
-        NoPilha *aux, *temp;
-        for(aux = p->prim; aux != NULL; aux = temp){
-            temp = aux->prox;
-            free(aux);
+//libera a pilha 
+void liberar(pilha *p) {
+    nopilha *q, *temp;
+    for (q = p->primeiro; q!=NULL; q = temp) {
+        temp = q->proximo;
+        free(q);
+    }
+    free(p);
+    p = criar();
+}
+
+void imprime(pilha*p) {
+    if (!vazia(p)) {
+        for ( nopilha *q = p->primeiro; q!=NULL; q = q->proximo) {
+            printf("%.1f\n", q->info);
         }
-        free(p);
-        p = criaPilha();
+    } else {
+        l();
+        printf("Pilha Vazia!");
+        l();
     }
 }
 
-void concatena_pilha (Pilha *p1, Pilha *p2) {
-    Pilha *aux = criaPilha();
-    NoPilha *temp;
-    for ( NoPilha *p = p2->prim; p!= NULL; p = temp ) {
-        temp = p->prox;
-        push(aux, pop(p2));
-    }
-    for ( NoPilha *p = aux->prim; p!=NULL; p = temp ) {
-        temp = p->prox;
-        push(p1, pop(aux));
-    }
-    printf("\n------------------------\n");
-    imprimePilha(p1);
+float ver_topo (pilha *p) {
+    return (p->primeiro->info);
 }
 
-int main(){
+int main () {
 
-    Pilha *p1 = criaPilha();
-    Pilha *p2 = criaPilha();
-    push(p1, 5012);
-    push(p1, 390);
-    push(p1, -133);
-
-    push(p2, 3);
-    push(p2, 25);
-    push(p2, 38);
+    // criando a pilha
+    pilha *p = criar();
+    //inserindo na pilha
+    push(p, 40);
+    push(p, 170);
+    push(p, 273);
+    push(p, 12); 
+    l();
+    printf("Pilha:\n");
+    imprime(p);
+    l();
+    printf("Topo da Pilha Atual:\n");
+    printf("%.1f", ver_topo(p));
+    l();
+    pop(p);
+    printf("Removendo:\n");
+    remove(p);
+    imprime(p);
+    l();
+    printf("Topo da Pilha Atual:\n");
+    printf("%.1f", ver_topo(p));
+    l();
     
-    imprimePilha(p1);
-    printf("\n------------------\n");
-    imprimePilha(p2);
-    concatena_pilha(p1, p2);
-    imprimePilha(p2);
-
+    return 0;
 }
