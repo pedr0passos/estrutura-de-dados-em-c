@@ -1,4 +1,3 @@
-atterina	2	Historia
-Juliana	1	Ciencia da Computacao
-Pedro	3	Nao sei
-Pedro	3	Nao sei
+Catterina	2	CC
+Henrique	1	CC
+Pedro	1	CC
