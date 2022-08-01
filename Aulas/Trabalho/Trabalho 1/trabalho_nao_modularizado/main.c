@@ -279,18 +279,23 @@ if ( arq != NULL ) {
         
 Aluno *a = malloc(sizeof(Aluno));
 
+//while para ler o arquivo inteiro
 while (fscanf(arq, "%d", &aux) != EOF) {
 
     Lista *n = malloc(sizeof(Lista));
 
+    // while que le as informações de cada aluno
     while ( fscanf(arq, "%[^\t]%d%[^\n]%d", &a->nome, &a->id, &a->curso) == 1 );
 
+    //Atualizando o identificador 
     if ( a->id >= identificador ) {
         identificador = (a->id + 1);
     }
     
+    // passando o conteúdo do que foi lido pelo while para o aluno que será inserido na lista dup encadeada
     n->aluno = *a;
 
+    // colocando o novo aluno na lista e acertando os ponteiros
     if ( !lista_vazia(&lista)) {
 
         Lista *p;
