@@ -1,107 +1,103 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-
 #define N 10
 
-typedef struct fila{
-    float info[N]; // armazena valores reais
-    int n; // num de elem existentes na fila
+// FILA COM VETOR
 
-    int inicio; // primeiro elem da fila
-}Fila;
+//estrutura da fila
+typedef struct f {
+    float info[N];  //vetor que armazena as informações
+    int n, inicio;  // inteiros n = número de elementos da fila, e inicio, marca semmpre qual o primeiro termo da fila, sendo ela o inicio da fila.
+}fila;
 
 void l() {
-    printf("\n------------------------------------------------------------------------------------\n");
+    printf("\n---------------------------------------------\n");
 }
 
-Fila* criarFila(){
-    Fila *f = malloc(sizeof(Fila));
-
+//cria a fila
+fila *criar() {
+    fila *f = malloc(sizeof(fila));
     f->n = 0;
     f->inicio = 0;
     return f;
 }
 
-int estaVazia(Fila *f){
-    return(f->n == 0);
+//verifica se a fila está vazia
+int vazia(fila *f) {
+    return (f->n == 0);
 }
 
-int estaCheia(Fila *f){
-    return(f->n == N);
+//verifica se a fila está cheia
+int cheia(fila *f) {
+    return (f->n == N);
 }
 
-void inserir(Fila *f, float v){
-    int n = 0;
-
-    if(!estaCheia(f)){
+void inserir(fila *f, float v) {
+    if (!cheia(f)) {
         int fim = (f->inicio + f->n) % N;
         f->info[fim] = v;
         f->n++;
-    }
-    else {
-        printf("\nfila cheia");
+    } else {
+        l();
+        printf("Fila Cheia!");
+        l();
     }
 }
 
-void imprimeFila(Fila *f){
-    int i, x = f->inicio;
-
-    if(!estaVazia(f)){
-        for(i = 0; i < f->n; i++){
-            printf("\n%.1f", f->info[x]);
-            x=(x+1) % N;
+void imprime(fila *f) {
+    int x = f->inicio;
+    if (!vazia(f)) {
+        for ( int i = 0; i < f->n; i++) {
+            printf("%.1f\n", f->info[x]);
+            x = (x+1)%N;
         }
+    } else {
+        l();
+        printf("Está Vazia!");
+        l();
     }
 }
-
-float remover(Fila *f){
+float remover(fila*f) {
     float v = f->info[f->inicio];
-    
-    if(!estaVazia(f)){
+    if ( !vazia(f)) {
         f->n--;
         f->inicio = (f->inicio + 1) % N;
         return v;
+    }else {
+        l();
+        printf("Fila Vazia");
+        l();
     }
-    else
-        printf("\nlista vazia");
 }
-
-void liberarFila(Fila *f){
+void liberar(fila*f) {
+    int x = f->inicio;
+    for(int i = 0; i < f->n; i++) {
+        f->info[x] = 0;
+        x = (x+1) % N;
+    }
     free(f);
 }
 
-float maior (Fila *f) {
-    int x= f->inicio;
-    float aux = 0;
-    for (int i = 0; i < f->n; i++) {
-        if ( f->info[x] > aux ) {
-            aux = f->info[x];
-            x = (x+1) % N;
-        } else {
-            x = (x+1) % N;
-        }
-    }
-    return aux;
-}
-
-int main(){
-    // criando a fila
-    Fila *f = criarFila();
-
-    // inserindo na fila
-    inserir(f, 50);
-    inserir(f, 2);
-    inserir(f, 70000000);
-    inserir(f, 100);
-    inserir(f, 22);
+int main(int argc, char const *argv[])
+{
+    fila *f = criar();
+    inserir(f, 14);
+    inserir(f, 4);
+    inserir(f, 9367);
+    inserir(f, 83);
     l();
     printf("Fila:\n");
-    imprimeFila(f);
+    imprime(f);
     l();
-    printf("Maior Elemento:\n");
-    float maior_termo = maior(f);
-    printf("%.2f", maior_termo);
+    remover(f);
+    printf("Removendo:\n");
+    imprime(f);
+    l();
+    liberar(f);
+    printf("Liberando:\n");
+    imprime(f);
 
 
+    return 0;
 }
