@@ -1,0 +1,6 @@
+caio	3	cc
+	1 
+catterina	2	cc
+	1 
+pedro	1	cc
+	3 	2 

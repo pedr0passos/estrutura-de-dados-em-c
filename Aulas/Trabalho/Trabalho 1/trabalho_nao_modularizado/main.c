@@ -34,10 +34,10 @@ typedef struct encadeada_principal {
 }Lista;
 
 /*----------------------------------------------------------------------------
-                            FUNï¿½ï¿½ES ADICIONAIS:
+                            FUNÇÕES ADICIONAIS:
 ----------------------------------------------------------------------------*/
 
-// funï¿½ï¿½o que busca um elemento 
+// função que busca um elemento 
 Lista *buscar_elemento(Lista **l, int id) {  
 
     Lista *p;
@@ -50,14 +50,14 @@ Lista *buscar_elemento(Lista **l, int id) {
     
     } else {
     
-        printf("Identificador nï¿½o encontrado\n");
+        printf("Identificador não encontrado\n");
         return NULL;
     
     }
 
 }
 
-// funï¿½ï¿½o que pula linha 
+// função que pula linha 
 void pl () {
 
     printf("\n");
@@ -85,7 +85,7 @@ void linha () {
 
 }
 
-// funï¿½ï¿½o que verifica se ela esta vazia 
+// função que verifica se ela esta vazia 
 int lista_vazia ( Lista **l ) {
 
     if ( *l == NULL ) {
@@ -151,13 +151,13 @@ void imprime_amigos ( Lista **a, Lista **l ) {
 
     } else {
 
-        printf ("Nï¿½o possui amigos!");
+        printf ("Não possui amigos!");
 
     }
 
 }
 
-// insere uma relaï¿½ï¿½o de amizade
+// insere uma relação de amizade
 void inserir_amigo ( Amigos **l, int v) {
 
     Amigos *amigo = malloc(sizeof(Amigos));
@@ -172,7 +172,7 @@ void inserir_amigo ( Amigos **l, int v) {
 
     else {
 
-        printf ("Nï¿½o foi possï¿½vel alocar espaï¿½o!");
+        printf ("Não foi possível alocar espaço!");
 
     }
 
@@ -184,10 +184,10 @@ void puxa(Lista **l) {
 }
 
 /*----------------------------------------------------------------------------
-                            FUNï¿½ï¿½ES OBRIGATï¿½RIAS:
+                            FUNÇÕES OBRIGATÓRIAS:
 ----------------------------------------------------------------------------*/
 
-// funï¿½ï¿½o que le um novo aluno
+// função que le um novo aluno
 Aluno *leAluno () {        
 
     Aluno *novo = (Aluno*)malloc(sizeof(Aluno));
@@ -284,15 +284,36 @@ while (fscanf(arq, "%d", &aux) != EOF) {
 
     Lista *n = malloc(sizeof(Lista));
 
-    // while que le as informaÃ§Ãµes de cada aluno
-    while ( fscanf(arq, "%[^\t]%d%[^\n]%d", &a->nome, &a->id, &a->curso) == 1 );
+    // while que le as informações de cada aluno
+    while ( fscanf(arq, "%[^\t]%d%[^\n]", &a->nome, &a->id, &a->curso) == 1 ) {    
+
+        while ( fscanf(arq, "%d ", &a->amigos->id) == 1 ) {
+            Amigos *amigo = malloc(sizeof(Amigos));
+            
+            if ( amigo != NULL) {
+
+                a->amigos->id = amigo->id;
+                amigo->proximo = a->amigos;
+                a->amigos = amigo;
+
+            }
+
+            else {
+
+                printf ("Não foi possível alocar espaço!");
+
+            }
+        }
+    }
+
+}
 
     //Atualizando o identificador 
     if ( a->id >= identificador ) {
         identificador = (a->id + 1);
     }
     
-    // passando o conteÃºdo do que foi lido pelo while para o aluno que serÃ¡ inserido na lista dup encadeada
+    // passando o conteúdo do que foi lido pelo while para o aluno que ser inserido na lista dup encadeada
     n->aluno = *a;
 
     // colocando o novo aluno na lista e acertando os ponteiros
@@ -322,25 +343,25 @@ while ( w == 0 ) {
 
     printf("\n-------------------------PEDRO E CATTERINA-------------------------\n");
     pl();
-    printf("Escolha a opï¿½ï¿½o desejada:\n");
+    printf("Escolha a opção desejada:\n");
     pl();
     printf("1 - Inserir um novo aluno\n");
     printf("2 - Alterar os dados de um aluno\n");
     printf("3 - Remover um aluno\n");
     printf("4 - Imprimir a lista de alunos\n");
-    printf("5 - Inserir relaï¿½ï¿½o de amizade\n");
-    printf("6 - Remover relaï¿½ï¿½o de amizade\n");
+    printf("5 - Inserir relação de amizade\n");
+    printf("6 - Remover relação de amizade\n");
     printf("7 - Imprimir amigos de um aluno\n");
     printf("8 - Imprimir a lista de alunos por curso\n");
     printf("9 - Sair\n");
     linha();
     pl();
-    printf("OPï¿½ï¿½O: ");
+    printf("OPÇÃO: ");
     scanf("%d", &opcao);
     
     switch (opcao){
 
-        case 1:;    // ADICIONANDO ALUNO ï¿½ LISTA
+        case 1:;    // ADICIONANDO ALUNO À LISTA
 
             linha();
             printf("INSERINDO ALUNO: \n");
@@ -442,7 +463,7 @@ while ( w == 0 ) {
             int id = 0;
             linha();
 
-            printf("\nRemoï¿½ï¿½o:\n");
+            printf("\nRemovendo:\n");
             printf("Digite o identificador do aluno: ");
             scanf("%d", &id);
 
@@ -481,7 +502,7 @@ while ( w == 0 ) {
             } else {
 
                 linha();
-                printf("Aluno nï¿½o encontrado!");
+                printf("Aluno Não encontrado!");
                 linha();
 
             }
@@ -501,18 +522,18 @@ while ( w == 0 ) {
             } else {
 
                 linha();
-                printf("Lista estï¿½ vazia!");
+                printf("Lista está vazia!");
                 linha();
 
             }
 
             break;
 
-        case 5:;    //INSERINDO RELAï¿½ï¿½O DE AMIZADE
+        case 5:;    //INSERINDO RELAÇÃO DE AMIZADE
             
             int id_amigo_1, id_amigo_2;
 
-            printf("INSERINDO RELAï¿½ï¿½O DE AMIZADE:\n");
+            printf("INSERINDO RELAÇÃO DE AMIZADE:\n");
             printf("Digite o primeiro ID: ");
             scanf("%d", &id_amigo_1);
             Lista *busca_amigo_1 = buscar_elemento(&lista, id_amigo_1);
@@ -524,9 +545,9 @@ while ( w == 0 ) {
 
             break;
         
-        case 6:;    //REMOVENDO RELAï¿½ï¿½O DE AMIZADE
+        case 6:;    //REMOVENDO RELAÇÃO DE AMIZADE
 
-            printf("REMOVENDO RELAï¿½ï¿½O DE AMIZADE:\n");
+            printf("REMOVENDO RELAÇÃO DE AMIZADE:\n");
             printf("Digite o primeiro ID: ");
             scanf("%d", &id_amigo_1);
             Lista *busca_amigo_3 = buscar_elemento(&lista, id_amigo_1);
@@ -596,9 +617,10 @@ while ( w == 0 ) {
                 fprintf(arq,"%s\t%d\t%s\n", p->aluno.nome, p->aluno.id, p->aluno.curso);
                     for ( Amigos *a = p->aluno.amigos; a != NULL; a = a->proximo) {
                         fprintf(arq, "\t");
-                        fprintf(arq, "%d ", a->id);
-                        fprintf(arq, "\n");
+                        fprintf(arq, "%d", a->id);
+                        fprintf(arq, " ");
                     }
+                    fprintf(arq,"\n");
             }
 
             close = fclose(arq);
@@ -623,7 +645,7 @@ while ( w == 0 ) {
         default:;
 
             linha();
-            printf("Opï¿½ï¿½o invï¿½lida! Execute novamente.");
+            printf("Opção Inválida! Execute novamente.");
             linha();
             w = 1;
             break;
