@@ -282,16 +282,14 @@ Aluno *a = malloc(sizeof(Aluno));
 while (fscanf(arq, "%d", &aux) != EOF) {
 
     Lista *n = malloc(sizeof(Lista));
-    Amigos *amigo = malloc(sizeof(Amigos));
 
-    while ( fscanf(arq, "%[^\t]%d%[^\n]\t%d\0%[^\n]", &a->nome, &a->id, &a->curso, &a->amigos.id) == 1 );
+    while ( fscanf(arq, "%[^\t]%d%[^\n]%d", &a->nome, &a->id, &a->curso) == 1 );
 
     if ( a->id >= identificador ) {
         identificador = (a->id + 1);
     }
-    n->aluno = *a;
-    amigo->id = a->amigos.id;
     
+    n->aluno = *a;
 
     if ( !lista_vazia(&lista)) {
 
