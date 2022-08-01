@@ -326,15 +326,7 @@ if ( arq != NULL ) {
             while (fscanf(arq, "%d", &aux) != EOF) {
 
                 Lista *n = malloc(sizeof(Lista));
-                while ( fscanf(arq, "%[^\t]", &a->nome) == 1 ) {
-                    printf("%s\n", a->nome);
-                }
-                while ( fscanf(arq, "%d", &a->id) == 1 ) {
-                    printf("%d\n", a->id);
-                }
-                while ( fscanf(arq, "%[^\n]", &a->curso) == 1 ) {
-                    printf("%s\n", a->curso);
-                }
+                while ( fscanf(arq, "%[^\t]%d%[^\n]", &a->nome, &a->id, &a->curso) == 1 );
                 n->aluno = *a;
                 if ( !lista_vazia(&lista)) {
                     Lista *p;
