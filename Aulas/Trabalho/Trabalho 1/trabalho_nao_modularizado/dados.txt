@@ -1,4 +1,4 @@
-Caio	1	Ciencia da Computaria
-Catterina	2	CC
-Henrique	1	CC
-Pedro	1	CC
+Catterina	2			CC
+Henrique	1			CC
+Pedro	1			CC
+Sei l  man‚	1		fodase

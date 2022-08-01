@@ -181,51 +181,6 @@ void inserir_amigo ( Amigos **l, int v) {
 // puxa dados do arquivo
 void puxa(Lista **l) {
 
-// int close;
-// char aux;
-// FILE *arq = fopen("dados.txt", "r");    
-
-// // verifica se o arquivo foi aberto
-// if ( arq != NULL ) {
-
-//     pl();
-//     printf("Arquivo Aberto");
-//     pl();
-
-// }
-//         Aluno *a = malloc(sizeof(Aluno));
-
-//         do {
-
-//         Lista *n = malloc(sizeof(Lista));
-//         printf("malloc\n");
-//         while ( fscanf(arq, "%[^\t]", &a->nome) == 1 ) {
-//             printf("%s\n", a->nome);
-//         }
-//         printf("NUMERO\n");
-//         while ( fscanf(arq, "%d", &a->id) == 1 ) {
-//             printf("%d\n", a->id);
-//         }
-//         while ( fscanf(arq, "%[^\t]", &a->curso) == 1 ) {
-//             printf("%s\n", a->curso);
-//         }
-//         n->aluno = *a;
-//         if ( !lista_vazia(*l)) {
-//             Lista *p;
-//             for ( p = *l; p->proximo != NULL; p = p->proximo );
-//             n->proximo = NULL;
-//             n->anterior = p;
-//             p->proximo = n;
-//         } else {
-//             n->proximo = NULL;
-//             n->anterior = NULL;
-//             *l = n;
-//         }
-//         printf("FODASE\n");
-//     } while (fscanf(arq, "%c", &aux) == 1);
-    
-//     close = fclose(arq);
-
 }
 
 /*----------------------------------------------------------------------------
@@ -322,31 +277,34 @@ if ( arq != NULL ) {
 
 }
         
-        Aluno *a = malloc(sizeof(Aluno));
-            while (fscanf(arq, "%d", &aux) != EOF) {
+Aluno *a = malloc(sizeof(Aluno));
 
-                Lista *n = malloc(sizeof(Lista));
-                while ( fscanf(arq, "%[^\t]%d%[^\n]", &a->nome, &a->id, &a->curso) == 1 );
-                n->aluno = *a;
-                if ( !lista_vazia(&lista)) {
-                    Lista *p;
-                    for ( p = lista; p->proximo != NULL; p = p->proximo );
-                    n->proximo = NULL;
-                    n->anterior = p;
-                    p->proximo = n;
-                } else {
-                    n->proximo = NULL;
-                    n->anterior = NULL;
-                    lista = n;
-                }
-            } 
+while (fscanf(arq, "%d", &aux) != EOF) {
+
+    Lista *n = malloc(sizeof(Lista));
+
+    while ( fscanf(arq, "%[^\t]%d%[^\n]", &a->nome, &a->id, &a->curso) == 1 );
+    n->aluno = *a;
+
+    if ( !lista_vazia(&lista)) {
+
+        Lista *p;
+        for ( p = lista; p->proximo != NULL; p = p->proximo );
+        n->proximo = NULL;
+        n->anterior = p;
+        p->proximo = n;
+
+    } else {
+
+        n->proximo = NULL;
+        n->anterior = NULL;
+        lista = n;
+
+    }
+} 
     
-    close = fclose(arq);
-
-// cria a lista duplamente encadeada
-
-// puxa(&lista);
-
+close = fclose(arq);
+// puxa(lista);
 arq = fopen("dados.txt", "r");
 while ( w == 0 ) {
 
