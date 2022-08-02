@@ -179,9 +179,7 @@ void inserir_amigo ( Amigos **l, int v) {
 }
 
 // puxa dados do arquivo
-void puxa(Lista **l) {
 
-}
 
 /*----------------------------------------------------------------------------
                             FUNÇÕES OBRIGATÓRIAS:
@@ -263,7 +261,8 @@ setlocale(LC_ALL,"portuguese");
 // variaveis
 Lista *lista;
 int opcao,close, w = 0, id_aux=0;
-char aux;
+int aux;
+char prox_linha;
 
 FILE *arq = fopen("dados.txt", "r");    
 cria_lista(&lista);
@@ -285,34 +284,27 @@ while (fscanf(arq, "%d", &aux) != EOF) {
     Lista *n = malloc(sizeof(Lista));
 
     // while que le as informações de cada aluno
-    while ( fscanf(arq, "%[^\t]%d%[^\n]", &a->nome, &a->id, &a->curso) == 1 ) {    
+    while ( fscanf(arq, "%[^\t]%d%[^\n]", &a->nome, &a->id, &a->curso));
 
-        while ( fscanf(arq, "%d ", &a->amigos->id) == 1 ) {
-            Amigos *amigo = malloc(sizeof(Amigos));
-            
-            if ( amigo != NULL) {
+    // Amigos *amigo = malloc(sizeof(Amigos));
+    // amigo->id = a->amigos->id;
 
-                a->amigos->id = amigo->id;
-                amigo->proximo = a->amigos;
-                a->amigos = amigo;
+    // if ( a->amigos != NULL ) {
 
-            }
+    //     amigo->proximo = a->amigos;
+    //     a->amigos->proximo = amigo;
 
-            else {
+    // } else {
 
-                printf ("Não foi possível alocar espaço!");
+    //     a->amigos = amigo;
 
-            }
-        }
-    }
-
-}
+    // }
 
     //Atualizando o identificador 
     if ( a->id >= identificador ) {
         identificador = (a->id + 1);
     }
-    
+     
     // passando o conteúdo do que foi lido pelo while para o aluno que ser inserido na lista dup encadeada
     n->aluno = *a;
 
@@ -331,9 +323,8 @@ while (fscanf(arq, "%d", &aux) != EOF) {
         n->anterior = NULL;
         lista = n;
 
-    }
-} 
-
+    } 
+}
 
     
 close = fclose(arq);
