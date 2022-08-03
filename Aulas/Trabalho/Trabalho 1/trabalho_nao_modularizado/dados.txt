@@ -1,6 +1,6 @@
-caio	3	cc
-
-cat	2	cc
-
-pedro	1	cc
-
+Cat	2		cc
+	1 
+Pedro	1		cc
+	2 	3 
+caio	3		cc
+	1 

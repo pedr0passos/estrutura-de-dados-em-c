@@ -260,9 +260,13 @@ setlocale(LC_ALL,"portuguese");
 
 // variaveis
 Lista *lista;
-int opcao,close, w = 0, id_aux=0;
-int aux;
-char prox_linha;
+
+
+
+
+
+//----------------------------------------------------------------------ALTERADO---------------------------------------------------------------------//
+int opcao,close, w = 0;
 
 FILE *arq = fopen("dados.txt", "r");    
 cria_lista(&lista);
@@ -279,26 +283,20 @@ if ( arq != NULL ) {
 Aluno *a = malloc(sizeof(Aluno));
 
 //while para ler o arquivo inteiro
-while (fscanf(arq, "%d", &aux) != EOF) {
+while ( fscanf(arq, "%[^\t]%d%[^\n]", a->nome, &a->id, a->curso) != EOF ) {
 
+    int id_aux;
+    a->amigos = NULL;
     Lista *n = malloc(sizeof(Lista));
 
-    // while que le as informações de cada aluno
-    while ( fscanf(arq, "%[^\t]%d%[^\n]", &a->nome, &a->id, &a->curso));
+    while (fscanf(arq, "%d ", &id_aux) == 1 ) {
 
-    // Amigos *amigo = malloc(sizeof(Amigos));
-    // amigo->id = a->amigos->id;
-
-    // if ( a->amigos != NULL ) {
-
-    //     amigo->proximo = a->amigos;
-    //     a->amigos->proximo = amigo;
-
-    // } else {
-
-    //     a->amigos = amigo;
-
-    // }
+        Amigos *amigo = malloc(sizeof(Amigos)); 
+        amigo->id = id_aux;
+        amigo->proximo = a->amigos;
+        a->amigos = amigo;
+        
+    }
 
     //Atualizando o identificador 
     if ( a->id >= identificador ) {
@@ -325,11 +323,19 @@ while (fscanf(arq, "%d", &aux) != EOF) {
 
     } 
 }
-
     
 close = fclose(arq);
-// puxa(lista);
+
 arq = fopen("dados.txt", "r");
+//-------------------------------------------------------------------------------------------------------------------------------------------------------//
+
+
+
+
+
+
+
+
 while ( w == 0 ) {
 
     printf("\n-------------------------PEDRO E CATTERINA-------------------------\n");
@@ -603,6 +609,8 @@ while ( w == 0 ) {
 
         case 9:;    // ENCERRANDO O PROGRAMA 
             
+            //----------------------------------------------------------------------------------------------------------------------------------//
+
             arq = fopen("dados.txt", "w");
             for ( Lista *p = lista; p != NULL; p = p->proximo ) {
                 fprintf(arq,"%s\t%d\t%s\n", p->aluno.nome, p->aluno.id, p->aluno.curso);
@@ -630,6 +638,8 @@ while ( w == 0 ) {
                 linha();
 
             }
+
+            //----------------------------------------------------------------------------------------------------------------------------------//
 
             break;
 
