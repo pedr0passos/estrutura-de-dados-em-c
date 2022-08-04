@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#define N 10
+#define N 4
 
 // FILA COM VETOR
 
@@ -82,10 +82,12 @@ void liberar(fila*f) {
 int main(int argc, char const *argv[])
 {
     fila *f = criar();
-    inserir(f, 14);
+    inserir(f, 1);
+    inserir(f, 2);
+    inserir(f, 3);
     inserir(f, 4);
-    inserir(f, 9367);
-    inserir(f, 83);
+    inserir(f, 3);
+
     l();
     printf("Fila:\n");
     imprime(f);

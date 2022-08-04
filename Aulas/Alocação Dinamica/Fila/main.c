@@ -5,12 +5,12 @@
 typedef struct no {
     float info;
     struct no *proximo;
-}NoLista;
+}nofila;
 
-typedef struct fila {
-    NoLista *inicio;    // ponteiro que aponta para o primeiro termo da lista/fila
-    NoLista *fim;       // ponteiro que aponta para o ultimo termo da lista/fila
-}Fila;
+typedef struct f {
+    nofila *inicio;    // ponteiro que aponta para o primeiro termo da lista/fila
+    nofila *fim;       // ponteiro que aponta para o ultimo termo da lista/fila
+}fila;
 
 // FUNÇÕES 
 
@@ -22,191 +22,134 @@ void l(){
 }
 
 // cria a fila 
-Fila *criar_fila() {
-    
-    Fila *f = malloc(sizeof(Fila));
-    f->inicio = f->fim = NULL;
+fila *criar_fila() {
+    fila *f = malloc(sizeof(fila));
+    f->fim = f->inicio = NULL;
     return f;
-    
 }
 
 // verifica se a fila está vazia
-int vazia(Fila *f) {
-    
-    return ( f->inicio == NULL );
-    
+int vazia(fila *f) {
+    return (f->fim == NULL && f->inicio == NULL );
 }
 
 // inserir um elemento na fila
-void inserir (Fila *f, float v) {
-    
-    NoLista *novo = malloc(sizeof(NoLista));
+void inserir (fila *f, float v) {
+    nofila *novo = malloc(sizeof(nofila));
     novo->info = v;
     novo->proximo = NULL;
-    
-    if ( !vazia(f)) {   // se a fila não estiver fazia a incersão é diferente pois não existe o "proximo" do fim, pois fim = NULL
-     
-        f->fim->proximo = novo;
-        
-    } else {            // se a fila estiver vazia
-        
-        f->inicio = novo;
-    
-    }
-    
-    f->fim = novo;
-    
-}
-
-void imprime (Fila *f) {
-    
-    if ( !vazia(f) ) {
-        
-        for ( NoLista *p = f->inicio; p != NULL; p = p->proximo ) {
-            
-            printf("%.1f\n", p->info);
-            
-        }
-        
-    } else {
-        
-        l();
-        printf("Fila Vazia!\n");
-        l();
-        
-    }
-    
-}
-
-float remover (Fila *f) {
-    
-    NoLista *p = f->inicio;
-    float n = f->inicio->info;
-    
     if (!vazia(f)) {
-        
-        if ( f->inicio == f->fim ) {
-            
-            f->inicio = NULL;
-            f->fim = NULL;
-            
-        } else {
-            
-            f->inicio = f->inicio->proximo;
-
-        }
-        
-        free(p);
-        return n;
-        
+        f->fim->proximo = novo;
     } else {
-        
-        l();
-        printf("Fila Vazia!");
-        l();
+        f->inicio = novo;
+    } 
+    f->fim = novo;
+}
+
+void imprime (fila *f) {
+    if (!vazia(f)) {
+        nofila* p;
+        for ( p = f->inicio; p != NULL; p = p->proximo ) {
+            printf("%.1f\n", p->info);
+        }
+    } else {
+
+    } 
+
     
-    }
-
 }
 
-void liberar (Fila *f) {
+float remover (fila *f) {
     if ( !vazia(f)) {
-        
-        NoLista *temp;
-        
-        for ( NoLista *p = f->inicio; p!=NULL; p = temp) {
-            
-            temp = p->proximo;
-            free(p);
-            
-        }
-        
-        free(f);
-        f = NULL;
-        
+        nofila* aux = f->inicio;
+        float valor = aux->info;
+        f->inicio = aux->proximo;
+            if ( f->inicio == NULL ) {
+                f->fim = NULL;
+            }
+        free(aux);
+        return valor;
     } else {
-        
         l();
-        printf("Fila Vazia");
+        printf("Está Vazia");
         l();
-      
+    }
+
+}
+
+void fura (fila *f, float v) {
+    if (!vazia(f)) {
+        nofila *p, *aux=NULL;
+        for ( p = f->inicio; p->info != v; p = p->proximo ) {
+            aux = p;
+        }
+        if ( aux != NULL ) {
+            aux->proximo = p->proximo;
+            p->proximo = f->inicio;
+            f->inicio = p;
+        }
+
     }
 }
 
-void combinafilas( Fila *f_res, Fila*f1, Fila*f2) {
+// void combinafilas( fila *f_res, fila *f1, fila *f2) {
 
-    // SEM RECURSIVIDADE
+//     // SEM RECURSIVIDADE
 
-    // do {
-    //     inserir(f_res, remover(f1));
-    //     inserir(f_res, remover(f2));
-    //     if ( vazia(f1) ) {
-    //         do {
-    //             inserir(f_res, remover(f2));
-    //         }while( !vazia(f2) );
-    //     } else if ( vazia(f2)) {
-    //         do {
-    //            inserir(f_res, remover(f1));
-    //         } while (!vazia(f1));
+//     // do {
+//     //     inserir(f_res, remover(f1));
+//     //     inserir(f_res, remover(f2));
+//     //     if ( vazia(f1) ) {
+//     //         do {
+//     //             inserir(f_res, remover(f2));
+//     //         }while( !vazia(f2) );
+//     //     } else if ( vazia(f2)) {
+//     //         do {
+//     //            inserir(f_res, remover(f1));
+//     //         } while (!vazia(f1));
             
-    //     }
-    // }while ( !vazia(f1) && !vazia(f2));
+//     //     }
+//     // }while ( !vazia(f1) && !vazia(f2));
 
-    // COM RECURSIVIDADE
+//     // COM RECURSIVIDADE
 
-    // if ( !vazia(f1) && !vazia(f2) ) {
-    //     inserir(f_res, remover(f1));
-    //     inserir(f_res, remover(f2));
-    //     combinafilas(f_res, f1,f2);
-    // } else if (vazia(f1) && !vazia(f2)){
-    //     inserir(f_res, remover(f2));
-    //     combinafilas(f_res, f1,f2);
-    // } else if ( !vazia(f1) && vazia(f2)) {
-    //     inserir(f_res, remover(f1));
-    //     combinafilas(f_res, f1,f2);
-    // } else {
-    //     imprime(f_res);
-    // }
-}
+//     // if ( !vazia(f1) && !vazia(f2) ) {
+//     //     inserir(f_res, remover(f1));
+//     //     inserir(f_res, remover(f2));
+//     //     combinafilas(f_res, f1,f2);
+//     // } else if (vazia(f1) && !vazia(f2)){
+//     //     inserir(f_res, remover(f2));
+//     //     combinafilas(f_res, f1,f2);
+//     // } else if ( !vazia(f1) && vazia(f2)) {
+//     //     inserir(f_res, remover(f1));
+//     //     combinafilas(f_res, f1,f2);
+//     // } else {
+//     //     imprime(f_res);
+//     // }
+// }
 
 int main() {
 
-    Fila *fila = criar_fila();
-    Fila *fila2 = criar_fila();
-    Fila *fila_resp = criar_fila();
-    
+    fila *f = criar_fila();
+    inserir(f, 17);
+    inserir(f, 1);
+    inserir(f, 28);
+    inserir(f, 261);
+    inserir(f, 9);
+
     l();
-    inserir(fila, 2.1);
-    inserir(fila, 4.5);
-    inserir(fila, 1.0);
-    inserir(fila, 3.1);
-    inserir(fila, 1.8);
-    inserir(fila, 12.7);
-    inserir(fila, 22.1);
-    inserir(fila2, 7.2);
-    inserir(fila2, 3.1);
-    inserir(fila2, 9.8);
-    inserir(fila2, 6.3);
-    // inserir(fila2, 652);
     printf("Fila:\n");
-    imprime(fila);
+    imprime(f);
     l();
-    printf("Fila2:\n");
-    imprime(fila2);
+    printf("Removendo:\n");
+    remover(f);
+    imprime(f);
     l();
-    printf("Fila_Resposta:\n");
-    combinafilas(fila_resp, fila, fila2);
+    printf("Furando:\n");
+    fura(f, 9);
+    imprime(f);
 
+    // combinafilas(fila_resp, fila, fila2);
 
-
-    l();
-
-    
-    // printf("Item Removido: %.1f\n", remover(fila));
-    // l();
-    // printf("Fila:\n");
-    // imprime(fila);
-    // liberar(fila);
-   
     return 0;
 }
