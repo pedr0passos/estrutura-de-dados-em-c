@@ -15,7 +15,7 @@ void linha () {
 
 }
 
-//Funï¿½ï¿½o que pula linha 
+//Função que pula linha 
 void pl () {
 
     printf("\n");
@@ -25,68 +25,28 @@ void pl () {
 int main () {
 setlocale(LC_ALL,"portuguese");
 
-Lista *lista ;
+int opcao, close, w = 0;
+Lista *lista;
 
+//criando a lista
 cria_lista(&lista);
 
-int opcao,close, w = 0;
-
+//abrindo o arquivo
 FILE *arq = fopen("dados.txt", "r");    
-cria_lista(&lista);
 
 // verifica se o arquivo foi aberto
-if ( arq != NULL ) {
+if ( arq == NULL ) {
 
     pl();
-    printf("Arquivo Aberto");
+    printf("Não foi possível abrir o arquivo.");
     pl();
 
 }
-        
-Aluno *a = malloc(sizeof(Aluno));
 
-//while para ler o arquivo inteiro
-while ( fscanf(arq, "%[^\t]%d%[^\n]", a->nome, &a->id, a->curso) != EOF ) {
-
-    int id_aux;
-    a->amigos = NULL;
-    Lista *n = malloc(sizeof(Lista));
-
-    while (fscanf(arq, "%d ", &id_aux) == 1 ) {
-
-        Amigos *amigo = malloc(sizeof(Amigos)); 
-        amigo->id = id_aux;
-        amigo->proximo = a->amigos;
-        a->amigos = amigo;
-        
-    }
-
-    //Atualizando o identificador 
-    if ( a->id >= identificador ) {
-        identificador = (a->id + 1);
-    }
-     
-    // passando o conteï¿½do do que foi lido pelo while para o aluno que ser inserido na lista dup encadeada
-    n->aluno = *a;
-
-    // colocando o novo aluno na lista e acertando os ponteiros
-    if ( !lista_vazia(&lista)) {
-
-        Lista *p;
-        for ( p = lista; p->proximo != NULL; p = p->proximo );
-        n->proximo = NULL;
-        n->anterior = p;
-        p->proximo = n;
-
-    } else {
-
-        n->proximo = NULL;
-        n->anterior = NULL;
-        lista = n;
-
-    } 
-}
+//puxando dados do arquivo
+puxa(arq, &lista);
     
+//fechando arquivo
 close = fclose(arq);
 
 arq = fopen("dados.txt", "r");
@@ -95,20 +55,20 @@ while ( w == 0 ) {
 
     printf("\n------------------------PEDRO E CATTERINA------------------------\n");
     pl();
-    printf("Escolha a opï¿½ï¿½o desejada:\n");
+    printf("Escolha a opção desejada:\n");
     pl();
     printf("1 - Inserir um novo aluno\n");
     printf("2 - Alterar os dados de um aluno\n");
     printf("3 - Remover um aluno\n");
     printf("4 - Imprimir a lista de alunos\n");
-    printf("5 - Inserir relaï¿½ï¿½o de amizade\n");
-    printf("6 - Remover relaï¿½ï¿½o de amizade\n");
+    printf("5 - Inserir relação de amizade\n");
+    printf("6 - Remover relação de amizade\n");
     printf("7 - Imprimir amigos de um aluno\n");
     printf("8 - Imprimir a lista de alunos por curso\n");
     printf("9 - Sair\n");
     linha();
     pl();
-    printf("OPï¿½ï¿½O: ");
+    printf("OPÇÃO: ");
     scanf("%d", &opcao);
     
     switch (opcao){
@@ -121,11 +81,11 @@ while ( w == 0 ) {
             Lista *aluno_novo = malloc(sizeof(Lista));
             aluno_novo->aluno = *leAluno();
 
-            //ORDENAï¿½ï¿½O DA LISTA ( ORDEM ALFABï¿½TICA)
+            //ORDENAÇÃO DA LISTA ( ORDEM ALFABETICA )
 
             if ( !lista_vazia(&lista)) {   
                 
-                if ( lista->proximo == NULL && lista->anterior == NULL ) {      //INSERE QUANDO Hï¿½ APENAS 1 ELEMENTO NA LISTA                           
+                if ( lista->proximo == NULL && lista->anterior == NULL ) {      //INSERE QUANDO HÁ APENAS 1 ELEMENTO NA LISTA                           
                                         
                     if ( strcmp (aluno_novo->aluno.nome, lista->aluno.nome) > 0 ) {
 
@@ -209,7 +169,7 @@ while ( w == 0 ) {
                 } else {
 
                     linha();
-                    printf("O ID nï¿½o existe.");
+                    printf("O ID não existe.");
                     linha();
 
                 }
@@ -265,10 +225,10 @@ while ( w == 0 ) {
 
                 free(busca_3);                  
             
-            } else {    // CASE O ALUNO Nï¿½O SEJA ENCONTRADO 
+            } else {    // CASO O ALUNO NÃO SEJA ENCONTRADO 
 
                 linha();
-                printf("Aluno nï¿½o encontrado!");
+                printf("Aluno não encontrado!");
                 linha();
 
             }
@@ -290,25 +250,25 @@ while ( w == 0 ) {
             } else {
 
                 linha();
-                printf("Lista estï¿½ vazia!");
+                printf("Lista está vazia!");
                 linha();
 
             }
 
             break;
 
-        case 5:;    // INSERE RELAï¿½ï¿½O DE AMIZADE
+        case 5:;    // INSERE RELAÇÃO DE AMIZADE
             
             int id_amigo_1, id_amigo_2;
             
             linha();
-            printf("INSERINDO RELAï¿½ï¿½O DE AMIZADE:");
+            printf("INSERINDO RELAÇÃO DE AMIZADE:");
             linha();
 
-            printf("1ï¿½ID: ");
+            printf("1º ID: ");
             scanf("%d", &id_amigo_1);
             Lista *busca_amigo_1 = buscar_elemento(&lista, id_amigo_1);
-            printf("2ï¿½ID: ");
+            printf("2º ID: ");
             scanf("%d", &id_amigo_2);
             Lista *busca_amigo_2 = buscar_elemento(&lista, id_amigo_2);
             inserir_amigo(&busca_amigo_1->aluno.amigos, id_amigo_2);
@@ -316,16 +276,16 @@ while ( w == 0 ) {
 
             break;
         
-        case 6:;    // REMOVE RELAï¿½ï¿½O DE AMIZADE
+        case 6:;    // REMOVE RELAÇÃO DE AMIZADE
             
             linha();
-            printf("REMOVENDO RELAï¿½ï¿½O DE AMIZADE:");
+            printf("REMOVENDO RELAÇÃO DE AMIZADE:");
             linha();
 
-            printf("1ï¿½ID: ");
+            printf("1º ID: ");
             scanf("%d", &id_amigo_1);
             Lista *busca_amigo_3 = buscar_elemento(&lista, id_amigo_1);
-            printf("2ï¿½ID: ");
+            printf("2º ID: ");
             scanf("%d", &id_amigo_2);
             Lista *busca_amigo_4 = buscar_elemento(&lista, id_amigo_2);
             remove_amigo(&busca_amigo_3->aluno.amigos, id_amigo_2);
@@ -382,7 +342,7 @@ while ( w == 0 ) {
                 if ( contador == 0 ) {
 
                     linha();
-                    printf("Nï¿½o existe alunos desse curso na lista.");
+                    printf("Não existe alunos desse curso na lista.");
                     linha();
 
                 }
@@ -402,9 +362,7 @@ while ( w == 0 ) {
             for ( Lista *p = lista; p != NULL; p = p->proximo ) {
                 fprintf(arq,"%s\t%d\t%s\n", p->aluno.nome, p->aluno.id, p->aluno.curso);
                     for ( Amigos *a = p->aluno.amigos; a != NULL; a = a->proximo) {
-                        fprintf(arq, "\t");
-                        fprintf(arq, "%d", a->id);
-                        fprintf(arq, " ");
+                        fprintf(arq, "\t%d ", a->id);
                     }
                     fprintf(arq,"\n");
             }
@@ -430,7 +388,7 @@ while ( w == 0 ) {
         default:;   // DEFAULT  
 
             linha();
-            printf("Opï¿½ï¿½o Invï¿½lida! Execute novamente.");
+            printf("Opção Inválida! Execute novamente.");
             linha();
 
             continue;

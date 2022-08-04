@@ -31,7 +31,18 @@ Lista *buscar_elemento(Lista **l, int id) {
     Lista *p;
 
     for ( p = *l; p != NULL && p->aluno.id != id; p = p->proximo );
-    return p;
+
+    if ( p != NULL ) {
+
+        return p;
+    
+    } else {
+    
+        printf("\nN„o foi encontrado");
+        exit(1);
+    
+    }
+    
 
 }
 
@@ -42,7 +53,7 @@ void cria_lista (Lista **l) {
 
 }
 
-//Verifica se a lista est√° vazia
+//Verifica se a lista est· vazia
 int lista_vazia ( Lista **l ) {
 
     if ( *l == NULL ) {

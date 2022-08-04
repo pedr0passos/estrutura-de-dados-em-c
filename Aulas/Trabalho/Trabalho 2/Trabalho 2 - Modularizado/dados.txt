@@ -1,4 +1,0 @@
-cat	1		cc
-	2 
-pedro	2		cc
-	1 
