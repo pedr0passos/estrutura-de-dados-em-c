@@ -360,9 +360,9 @@ while ( w == 0 ) {
         case 9:;    // ENCERRA O PROGRAMA
             arq = fopen("dados.txt", "w");
             for ( Lista *p = lista; p != NULL; p = p->proximo ) {
-                fprintf(arq,"%s\t%d\t%s\n", p->aluno.nome, p->aluno.id, p->aluno.curso);
+                fprintf(arq,"%s\t%d\t%s\n\t", p->aluno.nome, p->aluno.id, p->aluno.curso);
                     for ( Amigos *a = p->aluno.amigos; a != NULL; a = a->proximo) {
-                        fprintf(arq, "\t%d ", a->id);
+                        fprintf(arq, "%d ", a->id);
                     }
                     fprintf(arq,"\n");
             }

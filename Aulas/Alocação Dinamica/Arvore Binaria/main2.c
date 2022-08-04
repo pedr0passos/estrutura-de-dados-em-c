@@ -35,13 +35,35 @@ int pertence(arvore *arv, char c) {
 }
 
 void imprime(arvore *arv) {
-
+    printf("<");
+    if ( !vazia(arv)) {
+        printf("%c", arv->info);
+        imprime(arv->esquerda);
+        imprime(arv->direita);
+    }
+    printf(">");
 }
 
 arvore *liberar(arvore *arv) {
-
+    if(!vazia(arv)) {
+        liberar(arv->esquerda);
+        liberar(arv->direita);
+        free(arv);
+    }
+    return NULL;
 }
 
+int pertence (arvore *arv, char c) {
+    if (!vazia(arv)) {
+        if(arv->info == c) {
+            return 1;
+        } else {
+            return pertence(arv->esquerda, c) || pertence(arv->direita, c);
+            
+
+        }
+    }
+}
 int main () {
 
     arvore *arv;
@@ -52,7 +74,7 @@ int main () {
     arvore *c = criar_arvore('c', e, f);
     arvore *a =  criar_arvore('a', b, c);
     arv = a;
-    imprime();
+    imprime(arv);
 
 
     return 0;
