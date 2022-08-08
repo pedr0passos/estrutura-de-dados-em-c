@@ -39,18 +39,18 @@ arvore *insere ( arvore* arv, int v) {
     return arv;
 }
 
-arvore *remove (arvore *arv, int v) {
+arvore *remover (arvore *arv, int v) {
     if ( vazia(arv) ) {
         return NULL;
     } else {
 
         if ( v < arv->info ) {
 
-            arv->esquerda = remove(arv->esquerda, v);
+            arv->esquerda = remover(arv->esquerda, v);
 
         } else if ( v > arv->info ) {
 
-            arv->direita = remove(arv->direita, v );
+            arv->direita = remover(arv->direita, v );
 
         } else {
 
@@ -74,15 +74,29 @@ arvore *remove (arvore *arv, int v) {
                 } 
                 arv->info = f->info;
                 f->info = v;
-                arv->esquerda = remove(arv->esquerda, v);
+                arv->esquerda = remover(arv->esquerda, v);
             }
         }
         return arv;
     }
 }
 
-int main(int argc, char const *argv[])
-{
+void imprime(arvore *a) {
+    if(!vazia(a)) {
+        printf("%d\n", a->info);
+        imprime(a->esquerda);
+        imprime(a->direita);
+    } 
+ }
+
+int main() {
     
+    arvore *arv;
+    arv = insere(arv, 5);
+    arv = insere(arv, 25);
+    arv = insere(arv, 31);
+    arv = insere(arv, 839);
+    imprime(arv);
+
     return 0;
 }

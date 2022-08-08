@@ -34,15 +34,6 @@ cria_lista(&lista);
 //abrindo o arquivo
 FILE *arq = fopen("dados.txt", "r");    
 
-// verifica se o arquivo foi aberto
-if ( arq == NULL ) {
-
-    pl();
-    printf("Não foi possível abrir o arquivo.");
-    pl();
-
-}
-
 //puxando dados do arquivo
 puxa(arq, &lista);
     
