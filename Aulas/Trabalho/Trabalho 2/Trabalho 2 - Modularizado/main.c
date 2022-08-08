@@ -6,8 +6,6 @@
 #include "aluno.h"
 #include "lista.h"
 
-static int identificador = 1;
-
 //Cria uma linha separadora 
 void linha () {
 

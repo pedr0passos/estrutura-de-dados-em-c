@@ -1,2 +1,8 @@
-cat	1	cc
+Caio Pinto Mucho	4	Broxa
+	
+Catterina	2	Fodase
+	
+Pedro	1	Ciencia da Fodase
+	
+Zebra	3	Listrada
 	
