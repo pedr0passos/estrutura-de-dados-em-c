@@ -4,10 +4,10 @@
 // ÁRVORES
 
 // estrutura da árvore
-typedef struct arv {
+typedef struct arv_binarie {
    int info;                 //armazena a informação da arvore
-   struct arv *esquerda;     //ponteiro para a esquerda de um suposto filho da arvore
-   struct arv *direita;      // ponteiro para a direita de um suposto filho da arvore
+   struct arv_binarie *esquerda;     //ponteiro para a esquerda de um suposto filho da arvore
+   struct arv_binarie *direita;      // ponteiro para a direita de um suposto filho da arvore
 }arvore;
 
 // FUNÇÕES 
@@ -17,11 +17,14 @@ void l() {
     printf("\n------------------------------------------------------------\n");
 }
 
+arvore *criar_arvore() {
+    return NULL;
+}
+
 //verifica se a arvore está vazia
 int vazia(arvore *a) {
     return (a == NULL);
 }
-
 
 // busca elemento na arvore
 arvore *busca(arvore *a, int v) {
@@ -63,12 +66,10 @@ arvore *remover (arvore *a, int v ) {
             a->direita = remover(a->direita, v);
         } else {
             if ( a->direita == NULL && a->esquerda == NULL ) {
-                printf("blabla\n");
                 free(a);
                 a = NULL;
-                printf("blabla2\n");
             }
-            if ( a->direita == NULL ) {
+            else if ( a->direita == NULL ) {
                 arvore *aux = a->esquerda;
                 free(a);
                 a = aux;
@@ -92,6 +93,18 @@ arvore *remover (arvore *a, int v ) {
         return a; 
 }
 
+int maior (arvore *a) {
+    if ( vazia(a)) {
+        return 0;
+    } else {
+        if ( a->direita != NULL ) {
+            return maior(a->direita);
+        } else {
+            return a->info;
+        }
+    }
+}
+
 //imprime a arvore
 void imprime(arvore *a) {
     printf("<");
@@ -103,34 +116,64 @@ void imprime(arvore *a) {
     printf(">");
 }
 
-int main(int argc, char** argv) {
-    printf("Main\n");
+int ocorrencias (arvore *a, int x) {
+    if (!vazia(a)) {
+        if ( x >= a->info ) {
+            return 1 + ocorrencias(a->direita, x);
+        } else {
+            return 0 + ocorrencias(a->esquerda, x);
+        }
+    } else {
+        return 0;
+    }
+}
+
+void imprime_folhas_decres (arvore *a) {
+    if (!vazia(a)) {
+        if (a->direita == NULL && a->esquerda == NULL ) {
+            printf("%d ", a->info);
+        } else {
+            imprime_folhas_decres(a->direita);
+            imprime_folhas_decres(a->esquerda);
+        }
+    }
+}
+
+int main() {
 
     // variaveis
-    arvore *arv;
-    printf("Main2\n");
+    arvore *arv = criar_arvore();
     //criando arvore
-    arv = insere(arv, 6);
-    arv = insere(arv, 2);
-    arv = insere(arv, 8);
-    arv = insere(arv, 1);
-    arv = insere(arv, 4);
-    arv = insere(arv, 3);
-    printf("Main2\n");
+    arv = insere(arv, 10);
+    arv = insere(arv, 7);
+    arv = insere(arv, 5);
+    arv = insere(arv, 11);
+    arv = insere(arv, 40);
+    arv = insere(arv, 22);
+    arv = insere(arv, 41);
+    arv = insere(arv, 9);
     
     // imprimindo arvore padrão
     l();
-    printf("Árvore:\n");
+    printf("Arvore:\n");
     imprime(arv);
     l();
 
     //removendo um termo da arvore 
     int numero = 3;
-    printf("Removendo %d da árvore:\n", numero);
+    printf("Removendo %d da arvore:\n", numero);
     arv  = remover(arv, numero);
     imprime(arv);
+    l();
+    printf("Maior Elemento:\n");
+    printf("%d", maior(arv));
+    l();
+    printf("Quantidade de 2 na arvore:\n");
+    printf("%d", ocorrencias(arv, 2));
+    l();
+    printf("Folhas:\n");
+    imprime_folhas_decres(arv);
     
-    
-    return (EXIT_SUCCESS);
+    return 0;
 }
 

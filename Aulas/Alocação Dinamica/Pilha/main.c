@@ -91,6 +91,26 @@ float ver_topo (pilha *p) {
     return (p->primeiro->info);
 }
 
+void concatena_v1(pilha *p1, pilha *p2) {
+    pilha *p3 = criar();
+    if (!vazia(p1) && !vazia(p2)) {
+        while (p2->primeiro != NULL) {
+            push(p3, pop(p2));
+        }
+        while (p3->primeiro != NULL ) {
+            push(p1, pop(p3));
+        }
+    }
+}
+
+void concatena_v2(pilha *p1, pilha*p2) {
+    if ( !vazia(p1) && !vazia(p2)) {
+        float v = pop(p2);
+        concatena_v2(p1, p2);
+        push(p1, v);
+    }
+}
+
 //concatena usando apenas ponteiros 
 void concatena_v3(pilha*p1, pilha *p2) {
     nopilha *q;
@@ -145,7 +165,7 @@ setlocale(LC_ALL,"portuguese");
     printf("%.1f", ver_topo(p2));
     l();
     printf("Concatenando com a Versão 3 da Função:\n");
-    concatena_v3(p1,p2);
+    concatena_v2(p1,p2);
     imprime(p1);
 
 

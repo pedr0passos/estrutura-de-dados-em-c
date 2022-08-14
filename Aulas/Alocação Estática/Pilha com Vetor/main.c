@@ -78,30 +78,64 @@ float ver_topo( pilha *p) {
     }
 }
 
+void concatena_v1(pilha*p1,pilha*p2) {
+    if (!vazia(p1) && !vazia(p2)) {
+        pilha*p3 = criar_pilha();
+        while (p2->n != 0 ) {
+            push(p3, pop(p2));
+        }
+        while (p3->n != 0 ) {
+            push(p1, pop(p3));
+        }
+    }
+}
+
+void concatena_v2(pilha*p1,pilha*p2) {
+    if (!vazia(p1) && !vazia(p2)) {
+        float v = pop(p2);
+        concatena_v2(p1,p2);
+        push(p1, v);
+    }
+}
+
+void concatena_v3(pilha*p1,pilha*p2) {
+    int  i, j;
+    for (j=0; j < p2->n; j++ ) {
+        p1->info[p1->n] = p2->info[j];
+        p1->n++; 
+    }
+    p2->n = 0;
+}
+
 int main () {
 setlocale(LC_ALL,"portuguese");
 
 // cria a pilha e envia o endereço para o ponteiro criado
 pilha *p = criar_pilha();
-
+pilha *p2 = criar_pilha();
     l();
     printf("PILHA COM VETOR:");
     l();
-    push(p, 70);
-    push(p, 620);
-    push(p, 180);
-    push(p, 928);
-    push(p, 4);
-    printf("Pilha Comum:\n");
+    push(p, 5.5);
+    push(p, 10);
+    push(p2, 7);
+    push(p2, 8.7);
+    printf("Pilha 1:\n");
     imprime(p);
     l();
-    printf("Removendo o topo:\n");
-    pop(p);
+    printf("Pilha 2:\n");
+    imprime(p2);
+    l();
+    concatena_v3(p,p2);
+    printf("Pilhas Concatenadas:\n");
     imprime(p);
-    l();
-    printf("Retornando o valor do topo:\n");
-    printf("%.1f", ver_topo(p));
-    l();
+    // printf("Removendo o topo:\n");
+    // pop(p);
+    // imprime(p);
+    // l();
+    // printf("Retornando o valor do topo:\n");
+    // printf("%.1f", ver_topo(p));
+    // l();
 
 return 0;
 }

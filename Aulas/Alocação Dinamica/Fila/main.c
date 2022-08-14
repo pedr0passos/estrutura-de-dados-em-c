@@ -92,6 +92,20 @@ void fura (fila *f, float v) {
     }
 }
 
+float maior (fila *f) {
+    if ( !vazia(f)) {
+        float x = 0;
+        for ( nofila*p = f->inicio; p!= NULL; p = p->proximo) {
+            if ( p->info > x ) {
+                x = p->info;
+            }
+        }
+        return x;
+    } else {
+        return 0;
+    }
+}
+
 // void combinafilas( fila *f_res, fila *f1, fila *f2) {
 
 //     // SEM RECURSIVIDADE
@@ -132,21 +146,24 @@ int main() {
 
     fila *f = criar_fila();
     inserir(f, 17);
-    inserir(f, 1);
+    inserir(f, 10935);
     inserir(f, 28);
     inserir(f, 261);
-    inserir(f, 9);
+    inserir(f, 9034985039);
 
     l();
     printf("Fila:\n");
     imprime(f);
+    l();
+    printf("Maior Elemento:\n");
+    printf("%.1f", maior(f));
     l();
     printf("Removendo:\n");
     remover(f);
     imprime(f);
     l();
     printf("Furando:\n");
-    fura(f, 9);
+    fura(f, 28);
     imprime(f);
 
     // combinafilas(fila_resp, fila, fila2);

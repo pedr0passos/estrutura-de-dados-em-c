@@ -90,14 +90,16 @@ int quantidade_caracteres(arvore *arv, int c) {
 }
 
 
-// int igual(arvore *raiz, arvore *raiz2){
-
+// int igual(arvore *raiz, arvore *raiz2) {
+//             //0         !=         0
 //     if ( (raiz == NULL) != (raiz2 == NULL)){
 //        return 0;
 //     }
+//         // 
 //     if ((raiz) == (raiz2)) {
 //        return 1;
 //     }
+//     //      info     !=     info2
 //     if ((raiz->info) != (raiz2->info)) {
 //        return 0;
 //     }
@@ -158,12 +160,12 @@ int main () {
     arvore *c = criar_arvore(11, e, f);
     arvore *a =  criar_arvore(23456, b, c);
     arv = a;
-    arvore *h = criar_arvore(2, criar_vazia(), criar_vazia());
-    arvore *k = criar_arvore(7, criar_vazia(), h);
-    arvore *q = criar_arvore(3, criar_vazia(), criar_vazia());
-    arvore *g = criar_arvore(1, criar_vazia(), criar_vazia());
-    arvore *n = criar_arvore(4, q, g);
-    arvore *p =  criar_arvore(27, k, n);
+    arvore *h = criar_arvore(4, criar_vazia(), criar_vazia());
+    arvore *k = criar_arvore(3, criar_vazia(), h);
+    arvore *q = criar_arvore(93546, criar_vazia(), criar_vazia());
+    arvore *g = criar_arvore(98, criar_vazia(), criar_vazia());
+    arvore *n = criar_arvore(11, q, g);
+    arvore *p =  criar_arvore(23456, k, n);
     arv2 = p;
     arv3 = copia(arv2);
 
@@ -193,12 +195,12 @@ int main () {
     printf("Maior:\n");
     printf("%d", maior(arv));
     l();
-    // printf("As arvores são iguais ?\n");
-    // if ( igual(arv, arv2) == 1 ) {
-    //     printf("São iguais\n");
-    // } else {
-    //     printf("Não são iguais\n");
-    // }
+    printf("As arvores são iguais ?\n");
+    if ( igual(arv, arv2) == 1 ) {
+        printf("São iguais\n");
+    } else {
+        printf("Não são iguais\n");
+    }
 
     return 0;
 }

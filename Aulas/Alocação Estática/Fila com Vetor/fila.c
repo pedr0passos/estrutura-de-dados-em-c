@@ -79,26 +79,67 @@ void liberar(fila*f) {
     free(f);
 }
 
+void posicoes (fila *f) {
+    if (!vazia(f)) {
+        int x = f->inicio;
+        for ( int i = 0; i < f->n; i ++) {
+            printf("%d\n", x);
+            x = (x+1)%N;
+        }
+    }
+}
+float maior (fila *f) {
+    if (!vazia(f)) {
+        float maior =0;
+        int x = f->inicio;
+        for ( int i = 0 ; i < f->n; i ++) {
+            if ( f->info[x] > maior ) {
+                maior = f->info[x];
+            }
+            x = (x+1)%N;
+        }
+        return maior;
+    } else {
+        return 0;
+    }
+}
+
 int main(int argc, char const *argv[])
 {
+
     fila *f = criar();
     inserir(f, 1);
     inserir(f, 2);
     inserir(f, 3);
     inserir(f, 4);
-    inserir(f, 3);
-
     l();
     printf("Fila:\n");
     imprime(f);
+    l();
+    printf("Maior Elemento:\n");
+    printf("%.1f", maior(f));
+    l();
+    printf("Posições:\n");
+    posicoes(f);
     l();
     remover(f);
     printf("Removendo:\n");
     imprime(f);
     l();
+    printf("Inserindo Novamente:\n");
+    inserir(f, 9);
+    imprime(f);
+    l();
+    printf("Maior Elemento:\n");
+    printf("%.1f", maior(f));
+    l();
+    printf("Posições:\n");
+    posicoes(f);
+    l();
     liberar(f);
     printf("Liberando:\n");
     imprime(f);
+    l();
 
 
     return 0;
