@@ -98,7 +98,7 @@ int maior (arvore *a) {
         return 0;
     } else {
         if ( a->direita != NULL ) {
-            return maior(a->direita);
+            maior(a->direita);
         } else {
             return a->info;
         }
@@ -118,8 +118,10 @@ void imprime(arvore *a) {
 
 int ocorrencias (arvore *a, int x) {
     if (!vazia(a)) {
-        if ( x >= a->info ) {
+        if ( x == a->info ) {
             return 1 + ocorrencias(a->direita, x);
+        }else if ( x > a->info ) {
+            return 0 + ocorrencias(a->direita, x);
         } else {
             return 0 + ocorrencias(a->esquerda, x);
         }
@@ -139,6 +141,20 @@ void imprime_folhas_decres (arvore *a) {
     }
 }
 
+int quantidade_de_numeros (arvore *a, int c) {
+    if ( vazia(a)) {
+        return 0;
+    } else {
+        if ( a->info == c ) {
+            return 1 + (quantidade_de_numeros(a->direita, c));
+        } else if ( c > a->info ) {
+            return quantidade_de_numeros(a->direita, c);
+        } else {
+            return quantidade_de_numeros(a->esquerda, c);
+        }
+    }
+}
+
 int main() {
 
     // variaveis
@@ -148,8 +164,8 @@ int main() {
     arv = insere(arv, 7);
     arv = insere(arv, 5);
     arv = insere(arv, 11);
-    arv = insere(arv, 40);
-    arv = insere(arv, 22);
+    arv = insere(arv, 5);
+    arv = insere(arv, 5);
     arv = insere(arv, 41);
     arv = insere(arv, 9);
     
@@ -169,7 +185,10 @@ int main() {
     printf("%d", maior(arv));
     l();
     printf("Quantidade de 2 na arvore:\n");
-    printf("%d", ocorrencias(arv, 2));
+    printf("%d", ocorrencias(arv, 12));
+    l();
+    printf("Quantidade de 5 na arvore:\n");
+    printf("%d", quantidade_de_numeros(arv, 5));
     l();
     printf("Folhas:\n");
     imprime_folhas_decres(arv);

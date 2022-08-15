@@ -71,7 +71,7 @@ float remover (fila *f) {
         return valor;
     } else {
         l();
-        printf("Está Vazia");
+        printf("Esta Vazia");
         l();
     }
 
@@ -106,7 +106,31 @@ float maior (fila *f) {
     }
 }
 
-// void combinafilas( fila *f_res, fila *f1, fila *f2) {
+ void combinafilas( fila *f_res, fila *f1, fila *f2) {
+
+    while ( !vazia(f1) || !vazia(f2)) {
+        if ( !vazia(f1 )) {
+            inserir(f_res, remover(f1));
+        }
+        if ( !vazia(f2)) {
+            inserir(f_res, remover(f2));
+        }
+    }
+
+    if (  !vazia(f1) && !vazia(f2)) {
+        inserir(f_res, remover(f1));
+        inserir(f_res, remover(f2));
+        combinafilas(f_res, f1, f2);
+    } else if ( vazia(f1) && !vazia(f2)) {
+        inserir(f_res, remover(f2));
+        combinafilas(f_res, f1, f2);
+    } else if ( !vazia(f1) && vazia(f2)) {
+        inserir(f_res, remover(f1));
+        combinafilas(f_res, f1, f2);
+    } else {
+
+    }
+
 
 //     // SEM RECURSIVIDADE
 
@@ -140,20 +164,31 @@ float maior (fila *f) {
 //     // } else {
 //     //     imprime(f_res);
 //     // }
-// }
+ }
 
 int main() {
 
     fila *f = criar_fila();
-    inserir(f, 17);
-    inserir(f, 10935);
-    inserir(f, 28);
-    inserir(f, 261);
-    inserir(f, 9034985039);
-
+    fila *fila_resp = criar_fila();
+    fila *f2 = criar_fila();
+    inserir(f, 2.1);
+    inserir(f, 4.5);
+    inserir(f, 1);
+    inserir(f2, 7.2);
+    inserir(f2, 3.1);
+    inserir(f2, 9.8);
+    inserir(f2, 8);
+    inserir(f2, 2.1);
     l();
     printf("Fila:\n");
     imprime(f);
+    l();
+    printf("Fila 2:\n");
+    imprime(f2);
+    l();
+    printf("Combinando:\n");
+    combinafilas(fila_resp, f, f2);
+    imprime(fila_resp);
     l();
     printf("Maior Elemento:\n");
     printf("%.1f", maior(f));
@@ -162,11 +197,11 @@ int main() {
     remover(f);
     imprime(f);
     l();
-    printf("Furando:\n");
-    fura(f, 28);
-    imprime(f);
+    // printf("Furando:\n");
+    // fura(f, 28);
+    // imprime(f);
 
-    // combinafilas(fila_resp, fila, fila2);
+
 
     return 0;
 }
