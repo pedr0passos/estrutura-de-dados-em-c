@@ -162,18 +162,124 @@ int maior(arvore*arv) {
     // }
     }
 }
+
+void imprime_in(arvore *a) {
+    if (!vazia(a)) {
+        imprime_in(a->esquerda);
+        printf("%d\n", a->info);
+        imprime_in(a->direita);
+    } else {
+
+    }
+}
+
+void imprime_pos(arvore *a) {
+    if(!vazia(a)) {
+        imprime_pos(a->esquerda);
+        imprime_pos(a->direita);
+        printf("%d\n",a->info);
+    }
+}
+
+int presente(arvore *a, int v) {
+    if (vazia(a)) {
+        return 0;
+    } else {
+        if (a->info == v) {
+            return 1;
+        } else {
+            return (presente(a->esquerda,v) || presente(a->direita,v)); 
+        }
+    }
+}
+
+int quantidade_de_nos(arvore *a) {
+    if (vazia(a)) {
+        return 0;
+    } else {
+        return 1 + (quantidade_de_nos(a->esquerda) + quantidade_de_nos(a->direita));
+    }
+}
+
+int media(arvore *a) {
+    if (vazia(a)) {
+        return 0;
+    } else {
+       return ( (a->info + media(a->esquerda) + media(a->direita))/(quantidade_de_nos(a))); 
+    }
+}
+
+int quant_nulls(arvore *a) {
+    if (vazia(a)) {
+        return 1;
+    } else {
+        return 0 + quant_nulls(a->esquerda) + quant_nulls(a->direita);
+    }
+}
+
+int soma(arvore *a) {
+    if (vazia(a)) {
+        return 0;
+    } else {
+        return (a->info + soma(a->esquerda) + soma(a->direita));
+    }
+}
+
+int altura (arvore *a) {
+    if (vazia(a)) {
+        return -1;
+    } else {
+        int altura_e = altura(a->esquerda);
+        int altura_d = altura(a->direita);
+        if (altura_e < altura_d) {
+            return altura_e + 1;
+        } else {
+            return altura_d + 1;
+        }
+    }
+}
+
+int verifica(arvore *a) {
+    if (vazia(a)) {
+        return 1;
+    } else {
+        if ( (a->esquerda !=NULL && a->direita!=NULL) || (a->esquerda == NULL && a->direita == NULL)) {
+            return 1 && verifica(a->esquerda) && verifica(a->direita);
+        } else {
+            return 0;
+        }
+    }
+
+}
+
+void espelha (arvore *a) {
+    if (vazia(a)) {
+        return NULL;
+    } else {
+        espelha(a->esquerda);
+        espelha(a->direita);
+        arvore *aux = a->esquerda;
+        a->esquerda = a->direita;
+        a->direita= aux;
+        }
+        
+    }
+
+
 int main () {
 
     setlocale(LC_ALL, "portuguese");
 
     arvore *arv, *arv2, *arv3;
-    arvore *d = criar_arvore(1, criar_vazia(), criar_vazia());
-    arvore *b = criar_arvore(2, criar_vazia(), d);
-    arvore *e = criar_arvore(30, criar_vazia(), criar_vazia());
-    arvore *f = criar_arvore(4, criar_vazia(), criar_vazia());
-    arvore *c = criar_arvore(5, e, f);
-    arvore *a =  criar_arvore(6, b, c);
-    arv = a;
+    arvore *oito = criar_arvore(8, criar_vazia(),criar_vazia());
+    arvore *um = criar_arvore(1, criar_vazia(), criar_vazia());
+    arvore *tres = criar_arvore(3, criar_vazia(), criar_vazia());
+    arvore *dois = criar_arvore(2, um, tres);
+    arvore *cinco = criar_arvore(5, criar_vazia(), criar_vazia());
+    arvore *dez = criar_arvore(10, oito, criar_vazia());
+    arvore *seis = criar_arvore(6, cinco, dez);
+    arvore *quatro =  criar_arvore(4, dois, seis);
+    arv = quatro;
     arvore *h = criar_arvore(1, criar_vazia(), criar_vazia());
     arvore *k = criar_arvore(2, criar_vazia(), h);
     arvore *q = criar_arvore(3, criar_vazia(), criar_vazia());
@@ -184,37 +290,65 @@ int main () {
     arv3 = copia(arv2);
 
     l();
-    printf("Arvore 1:\n");
+    printf("Arvore (Pré Ordem):\n");
     imprime(arv);
     l();
-    printf("Arvore 2:\n");
-    imprime(arv2);
+    printf("Arvore (In Ordem):\n");
+    imprime_in(arv);
     l();
-    printf("Arvore Copiada:\n");
-    imprime(arv3);
+    printf("Arvore (Pós Ordem):\n");
+    imprime_pos(arv);
     l();
-    printf("Quantidade de Folhas:\n");
-    printf("%d", quantidade_folhas(arv));
+    // printf("Media dos Valores:\n");
+    // printf("%d", media(arv));
+    // l();
+    printf("Quantidade de Nulls:\n");
+    printf("%d", quant_nulls(arv));
     l();
-    int aux = pertence(arv, 'i');
-    if ( aux == 1 ) {
-        printf("PERTENCE!\n");
+    printf("Soma das Informações:\n");
+    printf("%d", soma(arv));
+    l();
+    printf("Altura da Arvore:\n");
+    printf("%d", altura(arv));
+    l();
+    printf("É Cheia?\n");
+    if ( verifica(arv) == 1) {
+        printf("SIM.");
     } else {
-        printf("NÃO PERTENCE!\n");
+        printf("NÃO");
     }
     l();
-    printf("Quantidade de números 3:\n");
-    printf("%d", quantidade_caracteres(arv, 3));
-    l();
-    printf("Maior:\n");
-    printf("%d", maior(arv));
-    l();
-    printf("As arvores são iguais ?\n");
-    if ( igual(arv, arv2) == 1 ) {
-        printf("São iguais\n");
-    } else {
-        printf("Não são iguais\n");
-    }
+    printf("Espelhando\n");
+    espelha(arv);
+    imprime(arv);
+    // printf("Arvore 2:\n");
+    // imprime(arv2);
+    // l();
+    // printf("Arvore Copiada:\n");
+    // imprime(arv3);
+    // l();
+    // printf("Quantidade de Folhas:\n");
+    // printf("%d", quantidade_folhas(arv));
+    // l();
+    // int aux = pertence(arv, 'i');
+    // if ( aux == 1 ) {
+    //     printf("PERTENCE!\n");
+    // } else {
+    //     printf("NÃO PERTENCE!\n");
+    // }
+    // l();
+    // printf("Quantidade de números 3:\n");
+    // printf("%d", quantidade_caracteres(arv, 3));
+    // l();
+    // printf("Maior:\n");
+    // printf("%d", maior(arv));
+    // l();
+    // printf("As arvores são iguais ?\n");
+    // if ( igual(arv, arv2) == 1 ) {
+    //     printf("São iguais\n");
+    // } else {
+    //     printf("Não são iguais\n");
+    // }
 
     return 0;
 }

@@ -338,7 +338,7 @@ arq = fopen("dados.txt", "r");
 
 while ( w == 0 ) {
 
-    printf("\n-------------------------PEDRO E CATTERINA-------------------------\n");
+    // printf("\n-------------------------PEDRO E CATTERINA-------------------------\n");
     pl();
     printf("Escolha a opção desejada:\n");
     pl();

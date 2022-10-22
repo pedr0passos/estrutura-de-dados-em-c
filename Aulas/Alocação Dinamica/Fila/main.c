@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <locale.h>
 
 // structs da fila com lista 
 typedef struct no {
@@ -18,7 +19,7 @@ typedef struct f {
 // cria linha
 
 void l(){
-    printf("\n-------------------------------------------------------------------\n\n");
+    printf("\n--------------------------------------------------\n");
 }
 
 // cria a fila 
@@ -74,7 +75,6 @@ float remover (fila *f) {
         printf("Esta Vazia");
         l();
     }
-
 }
 
 void fura (fila *f, float v) {
@@ -166,7 +166,82 @@ float maior (fila *f) {
 //     // }
  }
 
+ int pertence(fila *f, float x) {
+    if ( vazia(f)) {
+        return -1;
+    } else {
+        nofila *q;
+        for ( q = f->inicio; q != NULL; q = q->proximo) {
+            if ( q != NULL ) {
+                if ( q->info == x ) {
+                    return 1;
+                }
+            } else {
+                return 0;
+            }
+        }
+    }
+ }
+
+// void ordenada ( fila *f) {
+//     if ( !vazia(f)) {
+//         int tam_fila=0;
+//         for (nofila* q = f->inicio; q!= NULL; q = q->proximo){
+//             if ( q!=NULL) {
+//                 tam_fila++;
+//             }
+//         }
+//         printf("Tamanho da Fila: %d\n", tam_fila);
+//         int x = tam_fila;
+//         float v[x];
+//         for ( int i=0; i < x; i++) {
+//             v[i] = remover(f);
+//         }
+//         for ( int i=0; i<x; i++) {
+//             printf("Vetor %d: %.1f\n", i, v[i]);
+//         }
+//         float menor = v[0];
+//         printf("Menor: %.1f\n", menor);
+//         int aux = x-1;
+//         printf("Aux:%d\n", aux);
+//             while ( aux != 0 ) {
+//                 if ( v[aux] < menor ) {
+//                     printf("v[aux]%.1f\n",v[aux]);
+//                     menor = v[aux];
+//                     printf("Menor %.1f\n", menor);
+//                     inserir(f, menor);
+
+//                 } else {
+//                     i
+//                 }
+//                 aux--;
+//                 printf("AUX: %d\n", aux);
+//             }
+//         }
+//     }
+
+void inverte(fila *f) {
+    if (!vazia(f)) {
+        int tam_fila =0;
+        for (nofila*q = f->inicio; q!=NULL; q = q->proximo) {
+            if (q!=NULL) {
+                tam_fila++;
+            }
+        }
+        int i = tam_fila;
+        float vet[i];
+        for (i = (tam_fila - 1); i>=0; i--) {
+            vet[i] = remover(f);
+        }
+        for (i=0; i<tam_fila; i++) {
+            inserir(f, vet[i]);
+        }
+    }
+}
+
 int main() {
+setlocale(LC_ALL, "portuguese");
+
 
     fila *f = criar_fila();
     fila *fila_resp = criar_fila();
@@ -183,20 +258,38 @@ int main() {
     printf("Fila:\n");
     imprime(f);
     l();
-    printf("Fila 2:\n");
-    imprime(f2);
-    l();
-    printf("Combinando:\n");
-    combinafilas(fila_resp, f, f2);
-    imprime(fila_resp);
-    l();
-    printf("Maior Elemento:\n");
-    printf("%.1f", maior(f));
-    l();
-    printf("Removendo:\n");
-    remover(f);
+    printf("Invertendo:\n");
+    inverte(f);
     imprime(f);
-    l();
+
+    // float pert = 2.1;
+    // printf("%.1f Pertence a Fila ?\n", pert);
+    // if ( pertence(f, pert) == 1 ) {
+    //     printf("Pertence\n");
+    // } else if ( pertence(f, pert) == -1 )  {
+    //     printf("Fila Vazia\n");
+    // } else {
+    //     printf("Não Pertence\n");
+    // }
+    // l();
+    // printf("Ordenando\n");
+    // ordenada(f);
+    // imprime(f);
+    // l();
+    // printf("Fila 2:\n");
+    // imprime(f2);
+    // l();
+    // printf("Combinando:\n");
+    // combinafilas(fila_resp, f, f2);
+    // imprime(fila_resp);
+    // l();
+    // printf("Maior Elemento:\n");
+    // printf("%.1f", maior(f));
+    // l();
+    // printf("Removendo:\n");
+    // remover(f);
+    // imprime(f);
+    // l();
     // printf("Furando:\n");
     // fura(f, 28);
     // imprime(f);

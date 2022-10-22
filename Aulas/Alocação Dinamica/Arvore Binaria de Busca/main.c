@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <locale.h>
 // ÁRVORES
 
 // estrutura da árvore
@@ -155,16 +156,31 @@ int quantidade_de_numeros (arvore *a, int c) {
     }
 }
 
+int de_busca(arvore *a) {
+    if(vazia(a)) {
+        return 1;
+    } else {
+        if (a->info < a->esquerda->info || a->info > a->direita->info) {
+            return 0;
+        } else if (a->info > a->esquerda->info && a->info < a->direita->info ) {
+            return ( 1 && de_busca(a->esquerda) && de_busca(a->direita));
+        } else if ( a->direita == NULL && a->esquerda == NULL ) {
+            return 1;
+        }
+    }
+}
+
 int main() {
+setlocale(LC_ALL, "portuguese");
 
     // variaveis
     arvore *arv = criar_arvore();
     //criando arvore
     arv = insere(arv, 10);
     arv = insere(arv, 7);
-    arv = insere(arv, 5);
+    arv = insere(arv, 2);
     arv = insere(arv, 11);
-    arv = insere(arv, 5);
+    arv = insere(arv, 72);
     arv = insere(arv, 5);
     arv = insere(arv, 41);
     arv = insere(arv, 9);
@@ -174,24 +190,29 @@ int main() {
     printf("Arvore:\n");
     imprime(arv);
     l();
-
+    printf("É uma Arvore de Busca ?\n");
+    if (de_busca(arv) == 1) {
+        printf("SIM.");
+    } else {
+        printf("NÃO.");
+    }
     //removendo um termo da arvore 
-    int numero = 3;
-    printf("Removendo %d da arvore:\n", numero);
-    arv  = remover(arv, numero);
-    imprime(arv);
-    l();
-    printf("Maior Elemento:\n");
-    printf("%d", maior(arv));
-    l();
-    printf("Quantidade de 2 na arvore:\n");
-    printf("%d", ocorrencias(arv, 12));
-    l();
-    printf("Quantidade de 5 na arvore:\n");
-    printf("%d", quantidade_de_numeros(arv, 5));
-    l();
-    printf("Folhas:\n");
-    imprime_folhas_decres(arv);
+    // int numero = 3;
+    // printf("Removendo %d da arvore:\n", numero);
+    // arv  = remover(arv, numero);
+    // imprime(arv);
+    // l();
+    // printf("Maior Elemento:\n");
+    // printf("%d", maior(arv));
+    // l();
+    // printf("Quantidade de 2 na arvore:\n");
+    // printf("%d", ocorrencias(arv, 12));
+    // l();
+    // printf("Quantidade de 5 na arvore:\n");
+    // printf("%d", quantidade_de_numeros(arv, 5));
+    // l();
+    // printf("Folhas:\n");
+    // imprime_folhas_decres(arv);
     
     return 0;
 }
