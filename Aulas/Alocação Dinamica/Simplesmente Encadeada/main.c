@@ -146,6 +146,8 @@ void insere_ordenado (NoLista **l, int v) {
 
 }
 
+
+
 int main () {
 setlocale(LC_ALL,"portuguese");
 //variaveis
